@@ -37,6 +37,29 @@
             width: 100%;
         }
     </style>
+    <script>
+        // callAPI function that takes the base and exponent numbers as parameters
+        var callAPI = (base,exponent)=>{
+            // instantiate a headers object
+            var myHeaders = new Headers();
+            // add content type header to object
+            myHeaders.append("Content-Type", "application/json");
+            // using built in JSON utility package turn object to string and store in a variable
+            var raw = JSON.stringify({"base":base,"exponent":exponent});
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("YOUR API GATEWAY ENDPOINT", requestOptions)
+            .then(response => response.text())
+            .then(result => alert(JSON.parse(result).body))
+            .catch(error => console.log('error', error));
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -49,12 +72,17 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
-    <p> Power of math </p>
     <main>
         <section id="home">
-            <h2>Home</h2>
-            <p>This is the home section of the website.</p>
-        </section>
+            <h2>TO THE POWER OF MATH!</h2>
+        	<form>
+                <label>Base number:</label>
+                <input type="text" id="base">
+                <label>...to the power of:</label>
+                <input type="text" id="exponent">
+                <!-- set button onClick method to call function we defined passing input values as parameters -->
+                <button type="button" onclick="callAPI(document.getElementById('base').value,document.getElementById('exponent').value)">CALCULATE</button>
+            </form>    </section>
         <section id="about">
             <h2>About</h2>
             <p>This section provides information about the website.</p>
